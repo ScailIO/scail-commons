@@ -111,6 +111,27 @@ package object ops {
      */
     def thenOption[A](a: => A): Option[A] = if (value) Option(a) else None
   }
+
+  /**
+   * Extension methods for `Byte`.
+   */
+  implicit class ByteOps(private val value: Byte) extends AnyVal {
+    /**
+     * Whether `value` is even.
+     *
+     * @return `true` if `value` is even, `false` otherwise
+     */
+    @inline
+    def isEven: Boolean = (value & 1) == 0
+
+    /**
+     * Whether `value` is odd.
+     *
+     * @return `true` if `value` is odd, `false` otherwise
+     */
+    @inline
+    def isOdd: Boolean = (value & 1) != 0
+  }
 }
 
 package ops {
