@@ -224,6 +224,13 @@ import scail.commons.ops.DefaultValue
 implicit val myClass: DefaultValue[MyClass] = DefaultValue(???)
 val e: Option[MyClass] = None
 assert(e.orEmpty == ???)
+
+// Collections
+import scail.commons.ops.collection.IndexedSeqOps
+
+val col = 1 to 10
+val elem = col.randomElement
+assert(col.contains(elem))
 ```
 
 Transitive dependencies
