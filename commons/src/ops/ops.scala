@@ -304,6 +304,28 @@ package object ops {
     @inline
     def toFuture: Future[A] = Future.fromTry(value)
   }
+
+  /**
+   * Extension methods for `Tuple2[A, B]`.
+   */
+  @SuppressWarnings(Array(Warts.ExposedTuples))
+  implicit class Tuple2Ops[A, B](private val tuple: Tuple2[A, B]) extends AnyVal {
+    /**
+     * Alias for `Tuple2#_1`.
+     *
+     * @return element 1 of this tuple
+     */
+    @inline
+    def key: A = tuple._1
+
+    /**
+     * Alias for `Tuple2#_2`.
+     *
+     * @return element 2 of this tuple
+     */
+    @inline
+    def value: B = tuple._2
+  }
 }
 
 package ops {
