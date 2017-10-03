@@ -260,6 +260,18 @@ assert(t.duplicatesBy(_.abs).sorted == Seq(1, 2))
 
 val r = Seq(true, 3.14, -1, "hi", false, 42)
 assert(r.filterByType[Int] == Seq(-1, 42))
+
+// Strings
+import scail.commons.ops.string.StringOps
+
+assert("  \n\t ".isBlank)
+
+assert("y".isTruthy)
+assert("f".isFalsy)
+
+assert(" abc \t def\n\nghi ".normalizeSpace == "abc def ghi")
+
+assert("àéîõüçÃÈÍÖÛÇ".stripAccents == "aeioucAEIOUC")
 ```
 
 Transitive dependencies
@@ -272,6 +284,8 @@ Module                    | Dependency
 `Config`                  | `"com.typesafe" % "config" % "1.3.4"`
 `IntOps#ordinalize`       | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
 `Messages`                | `"com.ibm.icu" % "icu4j" % "64.2"`
+`StringOps`               | `"org.apache.commons" % "commons-lang3" % "3.9"`
+`StringOps#titleCase`     | `"org.apache.commons" % "commons-text" % "1.7"`
 `ThrowableOps#stackTrace` | `"org.apache.commons" % "commons-lang3" % "3.9"`
 
 License
