@@ -37,6 +37,7 @@ trait Dependencies {
   val commonsText      = "org.apache.commons"          % "commons-text"            % "1.7"         % Provided
   val commonsValidator = "commons-validator"           % "commons-validator"       % "1.6"         % Provided
   val icu4j            = "com.ibm.icu"                 % "icu4j"                   % "64.2"        % Provided
+  val jBCrypt          = "de.svenkubiak"               % "jBCrypt"                 % "0.4.1"       % Provided
   val modeshapeCommon  = "org.modeshape"               % "modeshape-common"        % "5.4.1.Final" % Provided
   val typesafeConfig   = "com.typesafe"                % "config"                  % "1.3.4"       % Provided
 
@@ -59,6 +60,7 @@ trait Dependencies {
   , commonsText
   , commonsValidator
   , icu4j
+  , jBCrypt
   , modeshapeCommon
   , scalaLogging
   , typesafeConfig

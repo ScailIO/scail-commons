@@ -307,6 +307,13 @@ import scail.commons.ops.string.ValidatorOps
 assert("example.com".isValidDomain)
 assert("user@example.com".isValidEmail)
 assert("http://example.com".isValidUrl)
+
+// BCrypt password encryption
+import scail.commons.ops.util.BCryptOps
+
+val password = "123456".bcrypt
+assert(password != "123456")
+assert("123456".bcryptMatches(password))
 ```
 
 Transitive dependencies
@@ -316,6 +323,7 @@ Some modules require the following dependencies:
 
 Module                    | Dependency
 ------------------------- | ------------------------------------------------------
+`BCryptOps`               | `"de.svenkubiak" % "jBCrypt" % "0.4.1"`
 `Config`                  | `"com.typesafe" % "config" % "1.3.4"`
 `DigestOps`               | `"commons-codec" % "commons-codec" % "1.13"`
 `EscapeOps`               | `"org.apache.commons" % "commons-text" % "1.7"`
