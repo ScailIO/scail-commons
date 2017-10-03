@@ -21,6 +21,7 @@ import scala.collection.IndexedSeq
 import scala.collection.Map
 import scala.collection.MapLike
 import scala.collection.TraversableLike
+import scala.collection.TraversableOnce
 import scala.collection.generic.CanBuildFrom
 import scala.language.higherKinds
 import scala.reflect.ClassTag
@@ -165,6 +166,52 @@ package object collection {
       value collect {
         case e: B => e
       }
+    }
+  }
+
+  /**
+   * Extension methods for `TraversableOnce[A]`.
+   */
+  @SuppressWarnings(Array(Warts.TraversableOnceOps))
+  implicit class TraversableOnceOps[A](private val value: TraversableOnce[A]) extends AnyVal {
+    /**
+     * Typesafe alternative to `max`.
+     * Finds the largest element.
+     *
+     * @return optionally the largest element of this collection, `None` if empty
+     */
+    def safeMax[B >: A](implicit cmp: Ordering[B]): Option[A] = {
+      if (value.isEmpty) None else Option(value.max(cmp))
+    }
+
+    /**
+     * Typesafe alternative to `min`.
+     * Finds the smallest element.
+     *
+     * @return optionally the smallest element of this collection, `None` if empty
+     */
+    def safeMin[B >: A](implicit cmp: Ordering[B]): Option[A] = {
+      if (value.isEmpty) None else Option(value.min(cmp))
+    }
+
+    /**
+     * Typesafe alternative to `maxBy`.
+     * Finds the first element which yields the largest value measured by `f`.
+     *
+     * @return optionally the largest element of this collection, `None` if empty
+     */
+    def safeMaxBy[B: Ordering](f: A => B): Option[A] = {
+      if (value.isEmpty) None else Option(value maxBy f)
+    }
+
+    /**
+     * Typesafe alternative to `minBy`.
+     * Finds the first element which yields the smallest value measured by `f`.
+     *
+     * @return optionally the smallest element of this collection, `None` if empty
+     */
+    def safeMinBy[B: Ordering](f: A => B): Option[A] = {
+      if (value.isEmpty) None else Option(value minBy f)
     }
   }
 }
