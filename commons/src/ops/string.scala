@@ -19,6 +19,7 @@ import scail.commons.Constants.Warts
 
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.lang3.StringUtils
+import org.apache.commons.text.StringEscapeUtils
 import org.apache.commons.text.WordUtils
 
 import scala.util.control.Exception.catching
@@ -31,6 +32,8 @@ import java.io.StringReader
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.{UTF_8 => utf8}
 import java.security.MessageDigest
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 package object string {
   private val truthy = Set("y", "yes", "t", "true", "on")
@@ -262,5 +265,111 @@ package object string {
      */
     @inline
     def sha512: String = DigestUtils.sha512Hex(value)
+  }
+
+  /**
+   * Extension methods for string escaping and unescaping.
+   */
+  implicit class EscapeOps(private val value: String) extends AnyVal {
+    /**
+     * Returns a value for a CSV column enclosed in double quotes, if required, as per RFC4180.
+     *
+     * @return the input CSV column string
+     */
+    @inline
+    def escapeCsv: String = StringEscapeUtils.escapeCsv(value)
+
+    /**
+     * Escapes the characters in a string using HTML entities.
+     * Supports all known HTML 4.0 entities, including accents.
+     *
+     * @return the HTML4 escaped string
+     */
+    @inline
+    def escapeHtml: String = StringEscapeUtils.escapeHtml4(value)
+
+    /**
+     * Escapes the characters in a string using Java string rules.
+     *
+     * @return the Java escaped string
+     */
+    @inline
+    def escapeJava: String = StringEscapeUtils.escapeJava(value)
+
+    /**
+     * Escapes the characters in a string using Json string rules.
+     *
+     * @return the Json escaped string
+     */
+    @inline
+    def escapeJson: String = StringEscapeUtils.escapeJson(value)
+
+    /**
+     * Escapes the characters in a string using XML entities.
+     *
+     * @return the XML escaped string
+     */
+    @inline
+    def escapeXml: String = StringEscapeUtils.escapeXml11(value)
+
+    /**
+     * Returns a string value for an unescaped CSV column.
+     *
+     * @return the unescaped string
+     */
+    @inline
+    def unescapeCsv: String = StringEscapeUtils.unescapeCsv(value)
+
+    /**
+     * Unescapes a string containing HTML 4.0 entity escapes to the
+     * actual Unicode characters corresponding to the escapes.
+     *
+     * @return the unescaped string
+     */
+    @inline
+    def unescapeHtml: String = StringEscapeUtils.unescapeHtml4(value)
+
+    /**
+     * Unescapes any Java literals found in the string.
+     *
+     * @return the unescaped string
+     */
+    @inline
+    def unescapeJava: String = StringEscapeUtils.unescapeJava(value)
+
+    /**
+     * Unescapes any Json literals found in the string.
+     *
+     * @return the unescaped string
+     */
+    @inline
+    def unescapeJson: String = StringEscapeUtils.unescapeJson(value)
+
+    /**
+     * Unescapes a string containing XML entity escapes to the
+     * actual Unicode characters corresponding to the escapes.
+     *
+     * @return the unescaped string
+     */
+    @inline
+    def unescapeXml: String = StringEscapeUtils.unescapeXml(value)
+
+    /**
+     * Produces a string that can be used as a `Pattern` that matches
+     * the original string as if it were a literal pattern.
+     *
+     * @return the literal string pattern
+     */
+    @inline
+    def quoteRegex: String = Pattern.quote(value)
+
+    /**
+     * Produces a string that can be used as a literal replacement
+     * in the `appendReplacement` method of the `Matcher` class.
+     *
+     * @return the literal string replacement pattern
+     */
+    @inline
+    def quoteRegexReplacement: String = Matcher.quoteReplacement(value)
   }
 }

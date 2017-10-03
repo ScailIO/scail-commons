@@ -279,6 +279,13 @@ import scail.commons.ops.string.DigestOps
 assert("hi".md5 startsWith "49f68")
 assert("hi".sha1 startsWith "c22b5")
 assert("hi".sha256 startsWith "8f434")
+
+// Escaping and unescaping
+import scail.commons.ops.string.EscapeOps
+
+assert("\t".escapeJava == "\\t")
+assert("\"".escapeHtml == "&quot;")
+assert("&quot;".unescapeHtml == "\"")
 ```
 
 Transitive dependencies
@@ -290,6 +297,7 @@ Module                    | Dependency
 ------------------------- | ------------------------------------------------------
 `Config`                  | `"com.typesafe" % "config" % "1.3.4"`
 `DigestOps`               | `"commons-codec" % "commons-codec" % "1.13"`
+`EscapeOps`               | `"org.apache.commons" % "commons-text" % "1.7"`
 `IntOps#ordinalize`       | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
 `Messages`                | `"com.ibm.icu" % "icu4j" % "64.2"`
 `StringOps`               | `"org.apache.commons" % "commons-lang3" % "3.9"`
