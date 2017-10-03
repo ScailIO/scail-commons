@@ -21,6 +21,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.text.StringEscapeUtils
 import org.apache.commons.text.WordUtils
+import org.modeshape.common.text.Inflector.{getInstance => Inflector}
 
 import scala.util.control.Exception.catching
 
@@ -371,5 +372,151 @@ package object string {
      */
     @inline
     def quoteRegexReplacement: String = Matcher.quoteReplacement(value)
+  }
+
+  /**
+   * Extension methods for inflection (singular/plural) and naming case convention transformations.
+   */
+  implicit class InflectorOps(private val value: String) extends AnyVal {
+    /**
+     * Capitalizes the first word and turns underscores into spaces and
+     * strips trailing "_id" and any supplied removable tokens.
+     *
+     * @return the humanized string
+     */
+    @inline
+    def humanize: String = humanize()
+
+    /**
+     * Capitalizes the first word and turns underscores into spaces and
+     * strips trailing "_id" and any supplied removable tokens.
+     *
+     * @param removableTokens optional array of tokens that are to be removed
+     * @return the humanized string
+     */
+    @inline
+    def humanize(removableTokens: String*): String = Inflector.humanize(value, removableTokens: _*)
+
+    /**
+     * Capitalizes all the words and replaces some characters in the string
+     * to create a nicer looking title.
+     * Underscores are changed to spaces, a trailing "_id" is removed,
+     * and any of the supplied tokens are removed.
+     *
+     * @return the title-case version of the supplied string
+     */
+    @inline
+    def humanizeTitle: String = humanizeTitle()
+
+    /**
+     * Capitalizes all the words and replaces some characters in the string
+     * to create a nicer looking title.
+     * Underscores are changed to spaces, a trailing "_id" is removed,
+     * and any of the supplied tokens are removed.
+     *
+     * @param removableTokens optional array of tokens that are to be removed
+     * @return the title-case version of the supplied string
+     */
+    @inline
+    def humanizeTitle(removableTokens: String*): String = {
+      Inflector.titleCase(value, removableTokens: _*)
+    }
+
+    /**
+     * Converts strings to lowerCamelCase.
+     *
+     * @return the lower camel case version of the word
+     */
+    @inline
+    def lowerCamelCase: String = lowerCamelCase("")
+
+    /**
+     * Converts strings to lowerCamelCase.
+     * This method will also use any extra delimiter characters to identify word boundaries.
+     *
+     * @param delimiterChars optional characters that are used to delimit word boundaries
+     * @return the lower camel case version of the word
+     */
+    @inline
+    def lowerCamelCase(delimiterChars: String): String = {
+      Inflector.lowerCamelCase(value.toLowerCase, delimiterChars.toCharArray: _*)
+    }
+
+    /**
+     * Returns the plural form of the word.
+     *
+     * @return the pluralized form of the word
+     */
+    @inline
+    def pluralize: String = pluralize(2)
+
+    /**
+     * Returns the plural form of the word.
+     *
+     * @param count the number to pluralize to
+     * @return the pluralized form of the word, or the word itself if it could not be pluralized
+     *         or if `count` was either 1 or -1
+     */
+    @inline
+    def pluralize(count: Int): String = Inflector.pluralize(value, count)
+
+    /**
+     * Returns a copy of the input with the first character converted to uppercase and
+     * the remainder to lowercase.
+     *
+     * @return the word with the first character capitalized and the remaining characters lowercased
+     */
+    @inline
+    def sentenceCase: String = Inflector.capitalize(value)
+
+    /**
+     * Returns the singular form of the word.
+     *
+     * @return the singularized form of the word, or the word itself if it could not be singularized
+     */
+    @inline
+    def singularize: String = Inflector.singularize(value)
+
+    /**
+     * Makes an underscored form from the expression in the string,
+     * the reverse of the camelCase method.
+     *
+     * @return the lower-cased version of the input with words delimited by the underscore character
+     */
+    @inline
+    def underscore: String = underscore("")
+
+    /**
+     * Makes an underscored form from the expression in the string,
+     * the reverse of the camelCase method.
+     * Also changes any characters that match the supplied delimiters into underscore.
+     *
+     * @param delimiterChars optional characters that are used to delimit word boundaries
+     * @return the lower-cased version of the input with words delimited by the underscore character
+     */
+    @inline
+    def underscore(delimiterChars: String): String = {
+      Inflector.underscore(value, delimiterChars.toCharArray: _*)
+    }
+
+    /**
+     * Converts strings to UpperCamelCase.
+     *
+     * @return the upper camel case version of the word
+     */
+    @inline
+    def upperCamelCase: String = upperCamelCase("")
+
+    /**
+     * Converts strings to UpperCamelCase.
+     * This method will also use any extra delimiter characters to identify word boundaries.
+     *
+     * @param delimiterChars optional characters that are used to delimit word boundaries
+     * @return the upper camel case version of the word
+     */
+    @inline
+    def upperCamelCase(delimiterChars: String): String = {
+      Inflector.upperCamelCase(value.toLowerCase, delimiterChars.toCharArray: _*)
+    }
   }
 }

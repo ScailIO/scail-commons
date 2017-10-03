@@ -286,6 +286,20 @@ import scail.commons.ops.string.EscapeOps
 assert("\t".escapeJava == "\\t")
 assert("\"".escapeHtml == "&quot;")
 assert("&quot;".unescapeHtml == "\"")
+
+// Inflection
+import scail.commons.ops.string.InflectorOps
+
+assert("hello_world".humanize == "Hello world")
+assert("hello_world".humanizeTitle == "Hello World")
+assert("hello_world".lowerCamelCase == "helloWorld")
+assert("hello_world".upperCamelCase == "HelloWorld")
+assert("helloWorld".underscore == "hello_world")
+
+assert("car".pluralize == "cars")
+assert("car".pluralize(1) == "car")
+assert("car".pluralize(2) == "cars")
+assert("cars".singularize == "car")
 ```
 
 Transitive dependencies
@@ -298,6 +312,7 @@ Module                    | Dependency
 `Config`                  | `"com.typesafe" % "config" % "1.3.4"`
 `DigestOps`               | `"commons-codec" % "commons-codec" % "1.13"`
 `EscapeOps`               | `"org.apache.commons" % "commons-text" % "1.7"`
+`InflectorOps`            | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
 `IntOps#ordinalize`       | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
 `Messages`                | `"com.ibm.icu" % "icu4j" % "64.2"`
 `StringOps`               | `"org.apache.commons" % "commons-lang3" % "3.9"`
