@@ -15,6 +15,9 @@
  */
 package scail.commons
 
+import scail.commons.Constants.Goats
+import scail.commons.Constants.Warts
+
 import scala.concurrent.Future
 
 package object ops {
@@ -48,5 +51,27 @@ package object ops {
       f(value)
       value
     }
+  }
+
+  /**
+   * Extension methods for `AnyRef`.
+   */
+  implicit class AnyRefOps[A <: AnyRef](private val value: A) extends AnyVal {
+    /**
+     * Whether a reference is null.
+     *
+     * @return `true` if null, `false` otherwise
+     */
+    @inline
+    def isNull: Boolean = !nonNull
+
+    /**
+     * Whether a reference is non-null.
+     *
+     * @return `true` if non-null, `false` otherwise
+     */
+    @inline
+    @SuppressWarnings(Array(Goats.NullParameter, Warts.Null))
+    def nonNull: Boolean = value != (null: AnyRef) // scalastyle:ignore null
   }
 }
