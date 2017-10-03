@@ -132,6 +132,27 @@ package object ops {
     @inline
     def isOdd: Boolean = (value & 1) != 0
   }
+
+  /**
+   * Extension methods for `Char`.
+   */
+  implicit class CharOps(private val value: Char) extends AnyVal {
+    /**
+     * Whether `value` is even.
+     *
+     * @return `true` if `value` is even, `false` otherwise
+     */
+    @inline
+    def isEven: Boolean = (value & 1) == 0
+
+    /**
+     * Whether `value` is odd.
+     *
+     * @return `true` if `value` is odd, `false` otherwise
+     */
+    @inline
+    def isOdd: Boolean = (value & 1) != 0
+  }
 }
 
 package ops {
