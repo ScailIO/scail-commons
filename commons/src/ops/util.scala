@@ -18,6 +18,8 @@ package scail.commons.ops
 import scail.commons.Constants.Goats
 import scail.commons.Constants.Warts
 
+import com.typesafe.scalalogging.Logger
+
 import org.mindrot.jbcrypt.BCrypt
 
 import java.io.File
@@ -132,5 +134,51 @@ package object util {
      * @return the list of path ancestors
      */
     def path: Seq[String] = value.getCanonicalPath.split(File.separatorChar).to[Seq]
+  }
+
+  private val exceptionMessage = "exception:"
+  /**
+   * Extension methods for Scala Logging.
+   */
+  implicit class LoggerOps(private val value: Logger) extends AnyVal {
+    /**
+     * Logs an exception (throwable) at the ERROR level.
+     *
+     * @param e the exception (throwable) to log
+     */
+    @inline
+    def error(e: => Throwable): Unit = value.error(exceptionMessage, e)
+
+    /**
+     * Logs an exception (throwable) at the WARN level.
+     *
+     * @param e the exception (throwable) to log
+     */
+    @inline
+    def warn(e: => Throwable): Unit = value.warn(exceptionMessage, e)
+
+    /**
+     * Logs an exception (throwable) at the INFO level.
+     *
+     * @param e the exception (throwable) to log
+     */
+    @inline
+    def info(e: => Throwable): Unit = value.info(exceptionMessage, e)
+
+    /**
+     * Logs an exception (throwable) at the DEBUG level.
+     *
+     * @param e the exception (throwable) to log
+     */
+    @inline
+    def debug(e: => Throwable): Unit = value.debug(exceptionMessage, e)
+
+    /**
+     * Logs an exception (throwable) at the TRACE level.
+     *
+     * @param e the exception (throwable) to log
+     */
+    @inline
+    def trace(e: => Throwable): Unit = value.trace(exceptionMessage, e)
   }
 }
