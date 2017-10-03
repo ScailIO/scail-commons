@@ -204,6 +204,26 @@ assert(1.ordinalize == "1st")
 assert(2.ordinalize == "2nd")
 assert(3.ordinalize == "3rd")
 assert(4.ordinalize == "4th")
+
+// Option
+import scail.commons.ops.OptionOps
+
+val a: Option[Int] = None
+val b: Option[Int] = Option(42)
+val c: Option[String] = None
+val d: Option[Seq[Int]] = None
+
+assert(a.orEmpty == 0)
+assert(b.orEmpty == 42)
+assert(c.orEmpty == "")
+assert(d.orEmpty == Seq.empty)
+
+// Defining custom default values
+import scail.commons.ops.DefaultValue
+
+implicit val myClass: DefaultValue[MyClass] = DefaultValue(???)
+val e: Option[MyClass] = None
+assert(e.orEmpty == ???)
 ```
 
 Transitive dependencies

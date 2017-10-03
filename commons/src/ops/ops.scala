@@ -20,7 +20,10 @@ import scail.commons.Constants.Warts
 
 import org.modeshape.common.text.Inflector.{getInstance => Inflector}
 
+import scala.collection.GenTraversable
 import scala.concurrent.Future
+import scala.language.experimental.macros
+import scala.reflect.macros.blackbox
 import scala.util.control.Exception.catching
 
 package object ops {
@@ -223,6 +226,26 @@ package object ops {
     @inline
     def isOdd: Boolean = (value & 1) != 0
   }
+
+  /**
+   * Extension methods for `Option[A]`.
+   */
+  implicit class OptionOps[A](private val value: Option[A]) extends AnyVal {
+    /**
+     * Executes side-effectful procedure `f` if value is empty, do nothing otherwise.
+     *
+     * @param f the side-effectful procedure to execute
+     */
+    @inline
+    def forNone(f: => Unit): Unit = if (value.isEmpty) f
+
+    /**
+     * Returns the option's value if nonempty, otherwise return a default "empty" value.
+     *
+     * @return the option's value if nonempty, a default empty value otherwise
+     */
+    def orEmpty(implicit ev: DefaultValue[A]): A = value.getOrElse(ev.default)
+  }
 }
 
 package ops {
@@ -240,5 +263,68 @@ package ops {
     // scalastyle:off method.name  method.argument.name
     def |(`false`: => A): A = if (value) `true` else `false`
     // scalastyle:on
+  }
+
+  /**
+   * Typeclass to create default empty values.
+   *
+   * @tparam A the type of the default empty value
+   */
+  trait DefaultValue[A] {
+    /**
+     * Returns a default value for type `A`
+     *
+     * @return the default value for type `A`
+     */
+    def default: A
+  }
+
+  object DefaultValue {
+    /**
+     * Factory method to create instances of the `DefaultValue` typeclass.
+     *
+     * @example {{{
+     * implicit val string: DefaultValue[String] = DefaultValue("")
+     * }}}
+     *
+     * @param value the default value
+     * @tparam A the type of the default value
+     * @return the instance of `DefaultValue[A]`
+     */
+    def apply[A](value: => A): DefaultValue[A] = new DefaultValue[A] {
+      def default: A = value
+    }
+
+    /**
+     * A default value (`false`) for `Boolean`.
+     */
+    implicit val boolean: DefaultValue[Boolean] = DefaultValue(false)
+
+    /**
+     * A default value (the empty string, `""`) for `String`.
+     */
+    implicit val string: DefaultValue[String] = DefaultValue("")
+
+    /**
+     * Default value (zero) for numeric types.
+     */
+    implicit def numeric[A: Numeric]: DefaultValue[A] = DefaultValue(implicitly[Numeric[A]].zero)
+
+    /**
+     * Default value (as by the companion's `empty` factory method) for collection types.
+     */
+    implicit def coll[A <: GenTraversable[_]]: DefaultValue[A] = macro collImpl[A]
+
+    def collImpl[A: c.WeakTypeTag](c: blackbox.Context): c.Tree = {
+      import c.universe._ // scalastyle:ignore import.grouping underscore.import
+
+      val coll = weakTypeOf[A].dealias
+      val tp = coll.typeArgs
+
+      coll.typeSymbol.companion match {
+        case NoSymbol => c.abort(c.enclosingPosition, s"Class $coll has no companion object")
+        case companion: Symbol => q"DefaultValue($companion.empty[..$tp])"
+      }
+    }
   }
 }
