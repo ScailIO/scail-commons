@@ -15,9 +15,16 @@
  */
 package scail.commons.ops
 
+import scail.commons.Constants.Goats
+import scail.commons.Constants.Warts
+
 import org.mindrot.jbcrypt.BCrypt
 
+import java.io.File
+
 package object util {
+  private val extSep = "."
+
   /**
    * Extension methods for bcrypt password hashing.
    */
@@ -79,5 +86,51 @@ package object util {
      */
     @inline
     def salt(rounds: Int): String = BCrypt.gensalt(rounds)
+  }
+
+  /**
+   * Extension methods for `File`.
+   */
+  implicit class FileOps(private val value: File) extends AnyVal {
+    /**
+     * Creates a new `File` instance from a parent `File` and a child pathname string.
+     *
+     * @param file the child pathname string
+     * @return the new `File` instance
+     */
+    // scalastyle:off method.name
+    @inline
+    def /(file: String): File = new File(value, file)
+    // scalastyle:on
+
+    /**
+     * Returns a lazy list containing a `File` ancestors.
+     *
+     * @return the lazy list containing all ancestors
+     */
+    @SuppressWarnings(Array(Goats.NullParameter, Warts.Null))
+    def ancestors: Stream[File] = {
+      Stream.iterate(value)(_.getParentFile).takeWhile(_ != null) // scalastyle:ignore null
+    }
+
+    /**
+     * Whether a file ends with a given extension.
+     * A leading dot (`"."`) is automatically inserted if it doesn't exist already.
+     *
+     * @param extension the file extension optionally including the dot, e.g. `".jpg"`
+     * @return `true` if the file ends with `ext`, `false` otherwise
+     */
+    @inline
+    def hasExtension(extension: String): Boolean = {
+      val ext = if (extension startsWith extSep) extension else extSep + extension
+      value.getName.endsWith(ext)
+    }
+
+    /**
+     * Returns a list of path ancestors split by the OS-specific path separator.
+     *
+     * @return the list of path ancestors
+     */
+    def path: Seq[String] = value.getCanonicalPath.split(File.separatorChar).to[Seq]
   }
 }

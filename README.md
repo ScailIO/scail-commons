@@ -314,6 +314,12 @@ import scail.commons.ops.util.BCryptOps
 val password = "123456".bcrypt
 assert(password != "123456")
 assert("123456".bcryptMatches(password))
+
+// File
+import scail.commons.ops.util.FileOps
+
+val f = new File("test.txt")
+assert(f.hasExtension("txt"))
 ```
 
 Transitive dependencies
