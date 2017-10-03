@@ -19,6 +19,7 @@ import scail.commons.Constants.Goats
 import scail.commons.Constants.Warts
 
 import scala.concurrent.Future
+import scala.util.control.Exception.catching
 
 package object ops {
   /**
@@ -152,6 +153,22 @@ package object ops {
      */
     @inline
     def isOdd: Boolean = (value & 1) != 0
+  }
+
+  /**
+   * Extension methods for `Enumeration`.
+   */
+  implicit class EnumerationOps[A <: Enumeration](private val value: A) extends AnyVal {
+    /**
+     * Typesafe alternative to `Enumeration#withName`.
+     *
+     * @param s an `Enumeration` name
+     * @return the optional `Value` of this `Enumeration` if its name matches `s`, `None` otherwise
+     */
+    @SuppressWarnings(Array(Warts.EnumerationPartial))
+    def byName(s: String): Option[A#Value] = {
+      catching[A#Value](classOf[NoSuchElementException]) opt value.withName(s)
+    }
   }
 }
 
