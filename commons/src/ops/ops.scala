@@ -202,6 +202,27 @@ package object ops {
     @inline
     def ordinalize: String = Inflector.ordinalize(value)
   }
+
+  /**
+   * Extension methods for `Long`.
+   */
+  implicit class LongOps(private val value: Long) extends AnyVal {
+    /**
+     * Whether `value` is even.
+     *
+     * @return `true` if `value` is even, `false` otherwise
+     */
+    @inline
+    def isEven: Boolean = (value & 1) == 0
+
+    /**
+     * Whether `value` is odd.
+     *
+     * @return `true` if `value` is odd, `false` otherwise
+     */
+    @inline
+    def isOdd: Boolean = (value & 1) != 0
+  }
 }
 
 package ops {
