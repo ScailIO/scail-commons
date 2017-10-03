@@ -231,6 +231,23 @@ import scail.commons.ops.collection.IndexedSeqOps
 val col = 1 to 10
 val elem = col.randomElement
 assert(col.contains(elem))
+
+// Maps
+import scail.commons.ops.collection.MapOps
+
+val m = Map(1 -> 2, 2 -> 3, 3 -> 5, 4 -> 7)
+
+assert(m.containsEntry(2 -> 3))
+
+assert(m.existsKey(_ > 3))
+assert(m.existsValue(_ > 6))
+
+assert(m.filterValues(_ % 2 == 0) == Map(1 -> 2))
+
+assert(m.forallKey(_ < 5))
+assert(m.forallValue(_ > 1))
+
+assert(m.mapKeys(2.*).contains(8))
 ```
 
 Transitive dependencies
