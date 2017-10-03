@@ -248,6 +248,18 @@ assert(m.forallKey(_ < 5))
 assert(m.forallValue(_ > 1))
 
 assert(m.mapKeys(2.*).contains(8))
+
+// Traversable
+import scail.commons.ops.collection.TraversableOps
+
+val s = Seq(1, 2, 3, 2, 5, 4, 5, 3, 2)
+assert(s.duplicates.sorted == Seq(2, 3, 5))
+
+val t = -2 to 5
+assert(t.duplicatesBy(_.abs).sorted == Seq(1, 2))
+
+val r = Seq(true, 3.14, -1, "hi", false, 42)
+assert(r.filterByType[Int] == Seq(-1, 42))
 ```
 
 Transitive dependencies

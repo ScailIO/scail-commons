@@ -20,8 +20,10 @@ import scail.commons.Constants.Warts
 import scala.collection.IndexedSeq
 import scala.collection.Map
 import scala.collection.MapLike
+import scala.collection.TraversableLike
 import scala.collection.generic.CanBuildFrom
 import scala.language.higherKinds
+import scala.reflect.ClassTag
 import scala.util.Random
 
 package object collection {
@@ -121,6 +123,48 @@ package object collection {
     @SuppressWarnings(Array(Warts.ExposedTuples))
     def mapKeys[C](f: A => C)(implicit bf: CanBuildFrom[M[A, B], (C, B), M[C, B]]): M[C, B] = {
       value map { case (k, v) => (f(k), v) }
+    }
+  }
+
+  /**
+   * Extension methods for `Traversable[A]`.
+   */
+  implicit class TraversableOps[A, T[A] <: TraversableLike[A, T[A]]](
+    private val value: T[A]
+  ) extends AnyVal {
+    /**
+     * Finds duplicated elements in a collection.
+     *
+     * @return the list of duplicated elements
+     */
+    @inline
+    def duplicates: Seq[A] = duplicatesBy(identity)
+
+    /**
+     * Finds duplicated elements in a collection according to a transformation function.
+     *
+     * @param f the transformation function mapping elements to some other domain
+     * @return the list of duplicated elements according to `f`
+     */
+    def duplicatesBy[B](f: A => B): Seq[B] = {
+      value.groupBy(f).collect {
+        case (e, c) if c.size > 1 => e
+      }.to[Seq]
+    }
+
+    /**
+     * Filters the elements of a collection by their type
+     *
+     * @tparam B the type of the elements to be filtered
+     * @return the new collection with only the elements of type `B`
+     *
+     * @usecase def filterByType[B <: A]: T[B]
+     */
+    @inline
+    def filterByType[B <: A: ClassTag](implicit bf: CanBuildFrom[T[A], B, T[B]]): T[B] = {
+      value collect {
+        case e: B => e
+      }
     }
   }
 }
