@@ -172,6 +172,23 @@ assert(messages.hello(name = "Scail") == "Hello Scail!")
 assert(messages.hello(name = "Scail")(ptBr) == "Olá Scail!")
 ```
 
+Extension methods
+-----------------
+
+Selected examples.
+See [Scaladoc](http://scailio.github.io/scail-commons/scail/commons)
+and [unit tests](commons/test/ops) for more.
+
+```scala
+import scail.commons.ops.AnyOps
+
+assert(1.option == Option(1))
+
+val fut = "a".future // Future.successful("a"))
+assert(fut.isCompleted)
+assert(fut.value.contains(Success("a")))
+```
+
 Transitive dependencies
 -----------------------
 
