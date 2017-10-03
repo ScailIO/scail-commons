@@ -32,6 +32,7 @@ trait Dependencies {
   )
 
   // Java
+  val commonsCodec     = "commons-codec"               % "commons-codec"           % "1.13"        % Provided
   val commonsLang      = "org.apache.commons"          % "commons-lang3"           % "3.9"         % Provided
   val commonsText      = "org.apache.commons"          % "commons-text"            % "1.7"         % Provided
   val icu4j            = "com.ibm.icu"                 % "icu4j"                   % "64.2"        % Provided
@@ -52,7 +53,8 @@ trait Dependencies {
   val macrosParadise   = "org.scalamacros"             % "paradise"                % "2.1.1"  cross CrossVersion.full
 
   val commonDependencies = Seq(
-    commonsLang
+    commonsCodec
+  , commonsLang
   , commonsText
   , icu4j
   , modeshapeCommon

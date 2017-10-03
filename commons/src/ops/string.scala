@@ -17,6 +17,7 @@ package scail.commons.ops
 
 import scail.commons.Constants.Warts
 
+import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.text.WordUtils
 
@@ -208,5 +209,58 @@ package object string {
      */
     @inline
     def titleCase: String = WordUtils.capitalizeFully(value)
+  }
+
+  /**
+   * Extension methods for message digests.
+   */
+  implicit class DigestOps(private val value: String) extends AnyVal {
+    /**
+     * Calculates the MD2 digest and returns the value as a 32 character hex string.
+     *
+     * @return the MD2 digest as a hex string
+     */
+    @inline
+    def md2: String = DigestUtils.md2Hex(value)
+
+    /**
+     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     *
+     * @return the MD5 digest as a hex string
+     */
+    @inline
+    def md5: String = DigestUtils.md5Hex(value)
+
+    /**
+     * Calculates the SHA-1 digest and returns the value as a 40 character hex string.
+     *
+     * @return the SHA-1 digest as a hex string
+     */
+    @inline
+    def sha1: String = DigestUtils.sha1Hex(value)
+
+    /**
+     * Calculates the SHA-256 digest and returns the value as a 64 character hex string.
+     *
+     * @return the SHA-256 digest as a hex string
+     */
+    @inline
+    def sha256: String = DigestUtils.sha256Hex(value)
+
+    /**
+     * Calculates the SHA-384 digest and returns the value as a 96 character hex string.
+     *
+     * @return the SHA-384 digest as a hex string
+     */
+    @inline
+    def sha384: String = DigestUtils.sha384Hex(value)
+
+    /**
+     * Calculates the SHA-512 digest and returns the value as a 128 character hex string.
+     *
+     * @return the SHA-512 digest as a hex string
+     */
+    @inline
+    def sha512: String = DigestUtils.sha512Hex(value)
   }
 }
