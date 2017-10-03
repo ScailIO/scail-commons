@@ -22,6 +22,8 @@ import com.typesafe.scalalogging.Logger
 
 import org.mindrot.jbcrypt.BCrypt
 
+import scala.util.Random
+
 import java.io.File
 
 package object util {
@@ -180,5 +182,39 @@ package object util {
      */
     @inline
     def trace(e: => Throwable): Unit = value.trace(exceptionMessage, e)
+  }
+
+  /**
+   * Extension methods for `scala.util.Random`.
+   */
+  implicit class RandomOps(private val value: Random) extends AnyVal {
+    /**
+     * Returns a pseudorandom, uniformly distributed integer value between `a` and `b`, inclusive.
+     *
+     * @param a the first value in the range, inclusive
+     * @param b the last value in the range, inclusive
+     * @return the pseudorandom, uniformly distributed integer between `a` and `b`, inclusive
+     */
+    def between(a: Int, b: Int): Int = value.nextInt((a - b).abs + 1) + a.min(b)
+
+    /**
+     * Generates a string of given length of pseudorandomly alphanumeric characters,
+     * equally chosen from A-Z, a-z, and 0-9.
+     *
+     * @param length the desirable length of the genrerated pseudorandom string
+     * @return the pseudorandom alphanumeric string of length `length`
+     */
+    def nextAlphanumeric(length: Int): String = value.alphanumeric.take(length).mkString
+
+    /**
+     * Generates a string of given length of pseudorandomly alphabetic characters,
+     * equally chosen from A-Z and a-z.
+     *
+     * @param length the desirable length of the genrerated pseudorandom string
+     * @return the pseudorandom alphabetic string of length `length`
+     */
+    def nextAlphabetic(length: Int): String = {
+      value.alphanumeric.filter(_.isLetter).take(length).mkString
+    }
   }
 }

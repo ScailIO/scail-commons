@@ -320,6 +320,21 @@ import scail.commons.ops.util.FileOps
 
 val f = new File("test.txt")
 assert(f.hasExtension("txt"))
+
+// Random
+import scail.commons.ops.util.RandomOps
+import scala.util.Random
+
+val dice = Random.between(1, 6)
+assert(dice >= 1 && dice <= 6)
+
+val r1 = Random.nextAlphanumeric(8) // A-Z, a-z, 0-9
+assert(r1.size == 8)
+assert(r1.forall(_.isLetterOrDigit))
+
+val r2 = Random.nextAlphabetic(10) // A-Z, a-z
+assert(r2.size == 10)
+assert(r2.forall(_.isLetter))
 ```
 
 Transitive dependencies
