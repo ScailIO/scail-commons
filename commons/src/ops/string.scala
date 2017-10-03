@@ -21,6 +21,9 @@ import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.text.StringEscapeUtils
 import org.apache.commons.text.WordUtils
+import org.apache.commons.validator.routines.DomainValidator.{getInstance => DomainValidator}
+import org.apache.commons.validator.routines.EmailValidator.{getInstance => EmailValidator}
+import org.apache.commons.validator.routines.UrlValidator.{getInstance => UrlValidator}
 import org.modeshape.common.text.Inflector.{getInstance => Inflector}
 
 import scala.util.control.Exception.catching
@@ -518,5 +521,34 @@ package object string {
     def upperCamelCase(delimiterChars: String): String = {
       Inflector.upperCamelCase(value.toLowerCase, delimiterChars.toCharArray: _*)
     }
+  }
+
+  /**
+   * Extension methods for string validation.
+   */
+  implicit class ValidatorOps(private val value: String) extends AnyVal {
+    /**
+     * Whether `value` is as a valid domain name with a recognized top-level domain.
+     *
+     * @return `true` if `value` is a valid domain name, `false` otherwise
+     */
+    @inline
+    def isValidDomain: Boolean = DomainValidator.isValid(value)
+
+    /**
+     * Whether `value` is a valid e-mail address.
+     *
+     * @return `true` if `value` is a valid email address, `false` otherwise
+     */
+    @inline
+    def isValidEmail: Boolean = EmailValidator.isValid(value)
+
+    /**
+     * Whether `value` is a valid URL address.
+     *
+     * @return `true` if `value` is a valid URL address, `false` otherwise
+     */
+    @inline
+    def isValidUrl: Boolean = UrlValidator.isValid(value)
   }
 }

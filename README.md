@@ -300,6 +300,13 @@ assert("car".pluralize == "cars")
 assert("car".pluralize(1) == "car")
 assert("car".pluralize(2) == "cars")
 assert("cars".singularize == "car")
+
+// Validation
+import scail.commons.ops.string.ValidatorOps
+
+assert("example.com".isValidDomain)
+assert("user@example.com".isValidEmail)
+assert("http://example.com".isValidUrl)
 ```
 
 Transitive dependencies
@@ -318,6 +325,7 @@ Module                    | Dependency
 `StringOps`               | `"org.apache.commons" % "commons-lang3" % "3.9"`
 `StringOps#titleCase`     | `"org.apache.commons" % "commons-text" % "1.7"`
 `ThrowableOps#stackTrace` | `"org.apache.commons" % "commons-lang3" % "3.9"`
+`ValidatorOps`            | `"commons-validator" % "commons-validator" % "1.6"`
 
 License
 -------

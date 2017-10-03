@@ -35,6 +35,7 @@ trait Dependencies {
   val commonsCodec     = "commons-codec"               % "commons-codec"           % "1.13"        % Provided
   val commonsLang      = "org.apache.commons"          % "commons-lang3"           % "3.9"         % Provided
   val commonsText      = "org.apache.commons"          % "commons-text"            % "1.7"         % Provided
+  val commonsValidator = "commons-validator"           % "commons-validator"       % "1.6"         % Provided
   val icu4j            = "com.ibm.icu"                 % "icu4j"                   % "64.2"        % Provided
   val modeshapeCommon  = "org.modeshape"               % "modeshape-common"        % "5.4.1.Final" % Provided
   val typesafeConfig   = "com.typesafe"                % "config"                  % "1.3.4"       % Provided
@@ -56,6 +57,7 @@ trait Dependencies {
     commonsCodec
   , commonsLang
   , commonsText
+  , commonsValidator
   , icu4j
   , modeshapeCommon
   , scalaLogging
