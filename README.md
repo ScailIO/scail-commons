@@ -335,6 +335,12 @@ assert(r1.forall(_.isLetterOrDigit))
 val r2 = Random.nextAlphabetic(10) // A-Z, a-z
 assert(r2.size == 10)
 assert(r2.forall(_.isLetter))
+
+// Regex
+import scail.commons.ops.util.RegexOps
+
+val regex = "a.*e".r
+assert(regex.matches("apple"))
 ```
 
 Transitive dependencies

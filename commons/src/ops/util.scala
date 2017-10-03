@@ -23,6 +23,7 @@ import com.typesafe.scalalogging.Logger
 import org.mindrot.jbcrypt.BCrypt
 
 import scala.util.Random
+import scala.util.matching.Regex
 
 import java.io.File
 
@@ -216,5 +217,18 @@ package object util {
     def nextAlphabetic(length: Int): String = {
       value.alphanumeric.filter(_.isLetter).take(length).mkString
     }
+  }
+
+  /**
+   * Extension methods for `Regex`.
+   */
+  implicit class RegexOps(private val value: Regex) extends AnyVal {
+    /**
+     * Attempts to match the entire region against the pattern.
+     *
+     * @param input the character sequence to be matched
+     * @return `true` if the entire region sequence matches this pattern, `false` otherwise
+     */
+    def matches(input: CharSequence): Boolean = value.pattern.matcher(input).matches
   }
 }
