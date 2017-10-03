@@ -187,6 +187,15 @@ assert(1.option == Option(1))
 val fut = "a".future // Future.successful("a"))
 assert(fut.isCompleted)
 assert(fut.value.contains(Success("a")))
+
+// Booleans
+import scail.commons.ops.BooleanOps
+
+def abs(i: Int) = (i >= 0) ? i | -i // ternary operator
+assert(abs(-123) >= 0)
+
+assert((1 > 0).thenOption(42) == Option(42))
+assert((1 < 0).thenOption(42) == None)
 ```
 
 Transitive dependencies

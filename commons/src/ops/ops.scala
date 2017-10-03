@@ -74,4 +74,59 @@ package object ops {
     @SuppressWarnings(Array(Goats.NullParameter, Warts.Null))
     def nonNull: Boolean = value != (null: AnyRef) // scalastyle:ignore null
   }
+
+  /**
+   * Extension methods for `Boolean`.
+   */
+  implicit class BooleanOps(private val value: Boolean) extends AnyVal {
+    /**
+     * Ternary operator.
+     *
+     * @example {{{
+     * cond ? "yes" | "no"
+     * }}}
+     *
+     * @param `true` the value to be returned if the boolean expression is true
+     * @tparam A the return type of the expression
+     * @return the first parameter if the boolean value is true, the second parameter otherwise
+     */
+    // scalastyle:off method.name method.argument.name
+    def ?[A](`true`: => A): Conditional[A] = new Conditional(value, `true`)
+    // scalastyle:on
+
+    /**
+     * Converts a boolean value to integer.
+     *
+     * @return `1` if the boolean is true, `0` otherwise
+     */
+    @inline
+    def asInt: Int = if (value) 1 else 0
+
+    /**
+     * Optionally returns a value if the boolean expression is true.
+     *
+     * @param a the value to be returned as an `Option`
+     * @tparam A the type of value `a`
+     * @return `Option(a)` if the boolean expression is true, `None` otherwise
+     */
+    def thenOption[A](a: => A): Option[A] = if (value) Option(a) else None
+  }
+}
+
+package ops {
+  final class Conditional[A](value: Boolean, `true`: => A) {
+    /**
+     * Ternary operator.
+     *
+     * @example {{{
+     * cond ? "yes" | "no"
+     * }}}
+     *
+     * @param `false` the value to be returned if the boolean expression is false
+     * @return the first parameter if the boolean value is true, the second parameter otherwise
+     */
+    // scalastyle:off method.name  method.argument.name
+    def |(`false`: => A): A = if (value) `true` else `false`
+    // scalastyle:on
+  }
 }
