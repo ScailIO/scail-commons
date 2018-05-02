@@ -18,6 +18,7 @@ package scail.commons
 import scail.commons.Constants.Goats
 import scail.commons.Constants.Warts
 
+import org.apache.commons.lang3.exception.ExceptionUtils
 import org.modeshape.common.text.Inflector.{getInstance => Inflector}
 
 import scala.collection.GenTraversable
@@ -266,6 +267,28 @@ package object ops {
      */
     @inline
     def isOdd: Boolean = (value & 1) != 0
+  }
+
+  /**
+   * Extension methods for `Throwable`.
+   */
+  implicit class ThrowableOps(private val value: Throwable) extends AnyVal {
+    /**
+     * Typesafe alternative to Throwable#getCause
+     *
+     * @return the optional cause of the throwable or `None` if the cause is nonexistent or unknown
+     */
+    @SuppressWarnings(Array(Warts.ThrowablePartial))
+    @inline
+    def cause: Option[Throwable] = Option(value.getCause)
+
+    /**
+     * Returns the stack trace from a `Throwable` as a `String`.
+     *
+     * @return the stack trace as a `String`
+     */
+    @inline
+    def stackTrace: String = ExceptionUtils.getStackTrace(value)
   }
 }
 

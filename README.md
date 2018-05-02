@@ -236,6 +236,7 @@ Module                    | Dependency
 `Config`                  | `"com.typesafe" % "config" % "1.3.4"`
 `IntOps#ordinalize`       | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
 `Messages`                | `"com.ibm.icu" % "icu4j" % "64.2"`
+`ThrowableOps#stackTrace` | `"org.apache.commons" % "commons-lang3" % "3.9"`
 
 License
 -------
