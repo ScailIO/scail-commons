@@ -25,6 +25,7 @@ import scala.collection.GenTraversable
 import scala.concurrent.Future
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
+import scala.util.Try
 import scala.util.control.Exception.catching
 
 package object ops {
@@ -289,6 +290,19 @@ package object ops {
      */
     @inline
     def stackTrace: String = ExceptionUtils.getStackTrace(value)
+  }
+
+  /**
+   * Extension methods for `Try[A]`.
+   */
+  implicit class TryOps[A](private val value: Try[A]) extends AnyVal {
+    /**
+     * Creates an already completed `Future` with the result or exception of this `Try`.
+     *
+     * @return the already completed `Future` instance with the contents of this `Try`
+     */
+    @inline
+    def toFuture: Future[A] = Future.fromTry(value)
   }
 }
 
