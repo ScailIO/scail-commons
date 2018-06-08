@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2018 Marconi Lanna
+ * Copyright 2017-2019 Marconi Lanna
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +50,4 @@ trait Resolvers {
   val shared = defaultShared
 
   // Custom repositories
-  val flyway = "Flyway" at "https://davidmweber.github.io/flyway-sbt.repo"
-  val tsec = bintray("jmcardon", "tsec")
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2018 Marconi Lanna
+ * Copyright 2017-2019 Marconi Lanna
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 resolvers ++= Seq(
-  Resolvers.flyway
-, Resolvers.sonatypeReleases
+  Resolvers.sonatypeReleases
 )
 
 // http://www.scalastyle.org/
@@ -40,19 +39,6 @@ addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.0")
 
 // http://github.com/scoverage/sbt-coveralls
 addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.2.7")
-
-// http://github.com/ktoso/sbt-jmh
-addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.3.7")
-
-// http://github.com/flyway/flyway-sbt
-addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "5.2.0")
-
-// http://github.com/scala-ide/scalariform
-// http://github.com/sbt/sbt-scalariform
-//addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.3")
-
-// http://scalameta.org/scalafmt
-//addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.0.3")
 
 // http://github.com/sbt/sbt-unidoc
 addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.2")
@@ -90,7 +76,3 @@ addSbtPlugin("com.eed3si9n" % "sbt-dirty-money" % "0.2.0")
 
 // http://github.com/coursier/coursier
 addSbtPlugin("io.get-coursier" % "sbt-coursier" % "2.0.0-RC3-3")
-
-// Creates Eclipse project definitions (.classpath, .project, .settings/)
-// http://github.com/typesafehub/sbteclipse
-//addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2018 Marconi Lanna
+ * Copyright 2017-2019 Marconi Lanna
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package project
+package scail.commons.util
 
-class SampleSpec extends Spec {
-  "Test:" - {
-    "Sample test" in new Context {
-      val result = obj.toString
+import com.typesafe.scalalogging.LazyLogging
 
-      assert(!result.isEmpty)
-      assert(result == expected)
-    }
-  }
-
-  class Context {
-    // shared objects
-    val expected = "forty two"
-
-    // shared mocks
-    val obj = mock[AnyRef]
-
-    // common expectations
-    obj.toString shouldReturn expected
-
-    // helper functions
-
-    // test setup
-  }
-}
+trait Logging extends LazyLogging

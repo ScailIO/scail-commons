@@ -1,5 +1,5 @@
 <!--
-Copyright 2011-2018 Marconi Lanna
+Copyright 2017-2019 Marconi Lanna
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ limitations under the License.
     <parameters>
       <parameter name="regex">true</parameter>
       <parameter name="header">/\*
- \* Copyright (?:20\d{2}-)?20\d{2} Marconi Lanna
+ \* Copyright 2017-2019 Marconi Lanna
  \*
  \* Licensed under the Apache License, Version 2\.0 \(the "License"\);
  \* you may not use this file except in compliance with the License\.
@@ -175,12 +175,12 @@ limitations under the License.
   <check class="org.scalastyle.scalariform.ImportGroupingChecker" enabled="true" level="error"/>
   <check class="org.scalastyle.scalariform.ImportOrderChecker" enabled="true" level="error">
     <parameters>
-      <parameter name="groups">PROJECT,com,net,org,others,play,akka,scala,java,javax</parameter>
-      <parameter name="group.PROJECT">PROJECT\..+</parameter>
+      <parameter name="groups">scail,com,net,org,others,play,akka,scala,java,javax</parameter>
+      <parameter name="group.scail">scail\..+</parameter>
       <parameter name="group.com">com\..+</parameter>
       <parameter name="group.net">net\..+</parameter>
       <parameter name="group.org">org\..+</parameter>
-      <parameter name="group.others">(?!(?:PROJECT|com|net|org|play|akka|scala|java|javax)\.).+</parameter>
+      <parameter name="group.others">(?!(?:scail|com|net|org|play|akka|scala|java|javax)\.).+</parameter>
       <parameter name="group.play">play\..+</parameter>
       <parameter name="group.akka">akka\..+</parameter>
       <parameter name="group.scala">scala\..+</parameter>
