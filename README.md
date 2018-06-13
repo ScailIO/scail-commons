@@ -149,6 +149,29 @@ user-friendly apostrophe quoting syntax,
 cardinal ('one', 'two') and ordinal numbers ('1st', '2nd', '3rd'),
 and [much more](http://site.icu-project.org/home/why-use-icu4j).
 
+### `@i18n` macro annotation
+
+Optionally, one may use the `@i18n` macro annotation for classes and objects.
+The `@i18n` macro reads the messages file at compile time and generates typesafe
+methods for every localized message.
+
+```scala
+@i18n object messages
+
+implicit val defaultLocale = Locale.ENGLISH
+val ptBr = Locale.forLanguageTag("pt-BR")
+
+assert(messages.helloWorld == "Hello World!")
+assert(messages.helloWorld(ptBr) == "Olá Mundo!")
+```
+
+Formatted messages are also supported:
+
+```scala
+assert(messages.hello(name = "Scail") == "Hello Scail!")
+assert(messages.hello(name = "Scail")(ptBr) == "Olá Scail!")
+```
+
 Transitive dependencies
 -----------------------
 

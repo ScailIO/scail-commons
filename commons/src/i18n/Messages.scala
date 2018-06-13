@@ -53,6 +53,42 @@ import java.util.Locale
  * @see [[http://icu-project.org/apiref/icu4j/com/ibm/icu/text/MessageFormat.html MessageFormat]]
  * @see [[http://icu-project.org/apiref/icu4j/com/ibm/icu/text/PluralFormat.html PluralFormat]]
  * @see [[http://icu-project.org/apiref/icu4j/com/ibm/icu/text/SelectFormat.html SelectFormat]]
+ *
+ * Optionally, one may use the `@i18n` macro annotation for classes and objects.
+ * The `@i18n` macro reads the messages file at compile time and generates typesafe
+ * methods for every localized message.
+ *
+ * @example {{{
+ * @i18n object messages
+ *
+ * implicit val defaultLocale = Locale.ENGLISH
+ * val ptBr = Locale.forLanguageTag("pt-BR")
+ *
+ * assert(messages.helloWorld == "Hello World!")
+ * assert(messages.helloWorld(ptBr) == "Oi Mundo!")
+ * }}}
+ *
+ * Formatted messages are also supported:
+ *
+ * @example {{{
+ * assert(messages.hello(name = "Scail") == "Hello Scail!")
+ * assert(messages.hello(name = "Scail")(ptBr) == "Oi Scail!")
+ * }}}
+ *
+ * One can pass custom parameters to the annotation by extending the `Messages` class:
+ *
+ * @example {{{
+ * @i18n object messages extends Messages(filename = "sample")
+ * }}}
+ *
+ * Please notice that parameter order in the method follows the same order
+ * as they were specified in the messages file.
+ * Therefore, it is highly recommended to use named parameters exclusively,
+ * as changes in the messages file can easily change parameter names or their relative order.
+ *
+ * Parameter types are inferred as `java.util.Date` if a date format is used in the messages file,
+ * as `java.lang.Number` if a number format is used,
+ * and `Any` otherwise.
  */
 class Messages(
   folder: String = "i18n"
