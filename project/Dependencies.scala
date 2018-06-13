@@ -32,6 +32,7 @@ trait Dependencies {
   )
 
   // Java
+  val typesafeConfig   = "com.typesafe"                % "config"                  % "1.3.4"       % Provided
 
   // Scala
   val scalaReflect     = "org.scala-lang"              % "scala-reflect"           % v.scala
@@ -48,6 +49,7 @@ trait Dependencies {
 
   val commonDependencies = Seq(
     scalaLogging
+  , typesafeConfig
   )
 
   val testDependencies = Seq(
@@ -59,5 +61,6 @@ trait Dependencies {
   val commonsTestDependencies = Seq(
     mockitoScala
   , scalatest
+  , typesafeConfig
   )
 }

@@ -23,10 +23,115 @@ To use the `Spec`, `Mocking`, and `MockConfig` traits, add:
 "io.github.scailio" %% "commons-test" % "1.0.0" % Test
 ```
 
+Also see the [transitive dependencies](#transitive-dependencies) requirements below.
+
 API documentation
 -----------------
 
 Scaladoc API documentation is available at http://scailio.github.io/scail-commons/scail/commons
+
+Typesafe Config wrapper
+-----------------------
+
+Supported types:
+
+* Natively by Typesafe Config:
+  * `Boolean`
+  * `Double`
+  * `Int`
+  * `Long`
+  * `String`
+  * `java.time.Duration`
+* Mapped (usually from strings converted using a factory method from the respective class):
+  * `scala.concurrent.duration.FiniteDuration`
+  * `scala.math.BigDecimal`
+  * `scala.math.BigInt`
+  * `java.time.LocalDate`
+  * `java.time.LocalDateTime`
+  * `java.time.LocalTime`
+  * `java.time.MonthDay`
+  * `java.time.OffsetDateTime`
+  * `java.time.Period`
+  * `java.time.Year`
+  * `java.time.YearMonth`
+  * `java.time.ZonedDateTime`
+  * `java.time.ZoneId`
+  * `java.util.Locale`
+  * `java.util.UUID`
+
+```scala
+import scail.commons.util.Config
+import scail.commons.util.Config.ConfigOps
+import com.typesafe.config.{Config => TypesafeConfig}
+
+class MyConfig(underlying: TypesafeConfig) extends Config(underlying) {
+  object Db extends Config('db) {
+    // Throws an exception at construction time if the setting is missing, as recommended by
+    // https://github.com/typesafehub/config#schemas-and-validation
+    val url: String = 'url.required // equivalent to config.getString("db.url")
+  }
+
+  val a = 'a.required[Boolean]
+  val b: Double = 'b.required
+
+  val c = 'c.optional[Duration] // c: Option[Duration]
+  val d: Option[Int] = 'd.optional
+
+  val e = 'e orElse 42L // e: Long
+  val f = 'f.orBlank // f: String
+  val g = 'g.orFalse // g: Boolean
+  val h = 'h.orTrue // h: Boolean
+  val i = 'i.orZero // i: Int
+
+  val r = 'r.required[Seq[FiniteDuration]]
+  val s: Seq[BigDecimal] = 's.required
+
+  val t = 't.optional[Seq[LocalDateTime]] // t: Option[Seq[LocalDateTime]]
+  val u: Option[Seq[Year]] = 'u.optional
+
+  val v = 'v.orEmpty[Locale] // v: Seq[Locale]
+  val w: Seq[UUID] = 'w.orEmpty
+
+  val x: String = Symbol("a.very-complicated:key_name!").required
+}
+```
+
+Custom `Reader`s are easily created by mapping on existing readers:
+
+```scala
+import scail.commons.util.Config.Reader
+
+case class Age(age: Int)
+case class Name(name: String)
+
+implicit val ageReader = Reader.int.map(Age.apply)
+implicit val nameReader = Reader.string.map(Name.apply)
+
+val myName: Name = 'myName.required
+val myAge = 'myAge.optional[Age]
+val friendNames: Seq[Name] = 'friendNames.orEmpty
+```
+
+Creating a custom `Reader` for composite data types is also straightforward:
+
+```scala
+case class Person(name: Name, age: Age, friends: Seq[Person])
+
+object Person {
+  implicit val personReader = Reader { implicit config =>
+    Person('name.required, 'age.required, 'friends.required)
+  }
+}
+```
+
+Transitive dependencies
+-----------------------
+
+Some modules require the following dependencies:
+
+Module                    | Dependency
+------------------------- | ------------------------------------------------------
+`Config`                  | `"com.typesafe" % "config" % "1.3.4"`
 
 License
 -------
