@@ -32,6 +32,7 @@ trait Dependencies {
   )
 
   // Java
+  val icu4j            = "com.ibm.icu"                 % "icu4j"                   % "64.2"        % Provided
   val typesafeConfig   = "com.typesafe"                % "config"                  % "1.3.4"       % Provided
 
   // Scala
@@ -48,7 +49,8 @@ trait Dependencies {
   val macrosParadise   = "org.scalamacros"             % "paradise"                % "2.1.1"  cross CrossVersion.full
 
   val commonDependencies = Seq(
-    scalaLogging
+    icu4j
+  , scalaLogging
   , typesafeConfig
   )
 

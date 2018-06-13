@@ -124,6 +124,31 @@ object Person {
 }
 ```
 
+Internationalization
+--------------------
+
+`scail.commons.i18n.Messages` provides advanced support for internationalization (i18n)
+and localization (l10n) features.
+
+Message files (located in `resources/i18n/`, by default) are written using
+[Typesafe Config](https://github.com/typesafehub/config) "HOCON" format.
+[HOCON](https://github.com/typesafehub/config/blob/master/HOCON.md) fully
+supports UTF-8 Unicode and is more flexible and powerful than Java `.properties`.
+
+For instance, it is possible to have a locale such as "en-CA" to automatically
+default to another locale, say "en", if a message is missing:
+just add the `include "messages.en.conf"` line to the `messages.en-CA.conf` file.
+
+Messages are rendered by [ICU4J](http://icu-project.org/), which provides
+comprehensive support for Unicode, globalization, and internationalization.
+Compared to Java `MessageFormat`, ICU4J supports
+[named and numbered arguments](http://icu-project.org/apiref/icu4j/com/ibm/icu/text/MessageFormat.html),
+enhanced [gender](http://icu-project.org/apiref/icu4j/com/ibm/icu/text/SelectFormat.html)
+and [plurals](http://icu-project.org/apiref/icu4j/com/ibm/icu/text/PluralFormat.html),
+user-friendly apostrophe quoting syntax,
+cardinal ('one', 'two') and ordinal numbers ('1st', '2nd', '3rd'),
+and [much more](http://site.icu-project.org/home/why-use-icu4j).
+
 Transitive dependencies
 -----------------------
 
@@ -132,6 +157,7 @@ Some modules require the following dependencies:
 Module                    | Dependency
 ------------------------- | ------------------------------------------------------
 `Config`                  | `"com.typesafe" % "config" % "1.3.4"`
+`Messages`                | `"com.ibm.icu" % "icu4j" % "64.2"`
 
 License
 -------
