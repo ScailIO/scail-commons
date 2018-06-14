@@ -196,6 +196,14 @@ assert(abs(-123) >= 0)
 
 assert((1 > 0).thenOption(42) == Option(42))
 assert((1 < 0).thenOption(42) == None)
+
+// Ordinals
+import scail.commons.ops.IntOps
+
+assert(1.ordinalize == "1st")
+assert(2.ordinalize == "2nd")
+assert(3.ordinalize == "3rd")
+assert(4.ordinalize == "4th")
 ```
 
 Transitive dependencies
@@ -206,6 +214,7 @@ Some modules require the following dependencies:
 Module                    | Dependency
 ------------------------- | ------------------------------------------------------
 `Config`                  | `"com.typesafe" % "config" % "1.3.4"`
+`IntOps#ordinalize`       | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
 `Messages`                | `"com.ibm.icu" % "icu4j" % "64.2"`
 
 License

@@ -18,6 +18,8 @@ package scail.commons
 import scail.commons.Constants.Goats
 import scail.commons.Constants.Warts
 
+import org.modeshape.common.text.Inflector.{getInstance => Inflector}
+
 import scala.concurrent.Future
 import scala.util.control.Exception.catching
 
@@ -169,6 +171,36 @@ package object ops {
     def byName(s: String): Option[A#Value] = {
       catching[A#Value](classOf[NoSuchElementException]) opt value.withName(s)
     }
+  }
+
+  /**
+   * Extension methods for `Int`.
+   */
+  implicit class IntOps(private val value: Int) extends AnyVal {
+    /**
+     * Whether `value` is even.
+     *
+     * @return `true` if `value` is even, `false` otherwise
+     */
+    @inline
+    def isEven: Boolean = (value & 1) == 0
+
+    /**
+     * Whether `value` is odd.
+     *
+     * @return `true` if `value` is odd, `false` otherwise
+     */
+    @inline
+    def isOdd: Boolean = (value & 1) != 0
+
+    /**
+     * Turns a non-negative number into an ordinal string used to denote
+     * the position in an ordered sequence, such as 1st, 2nd, 3rd, 4th.
+     *
+     * @return the string with the number and ordinal suffix
+     */
+    @inline
+    def ordinalize: String = Inflector.ordinalize(value)
   }
 }
 

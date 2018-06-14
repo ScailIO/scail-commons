@@ -33,6 +33,7 @@ trait Dependencies {
 
   // Java
   val icu4j            = "com.ibm.icu"                 % "icu4j"                   % "64.2"        % Provided
+  val modeshapeCommon  = "org.modeshape"               % "modeshape-common"        % "5.4.1.Final" % Provided
   val typesafeConfig   = "com.typesafe"                % "config"                  % "1.3.4"       % Provided
 
   // Scala
@@ -50,6 +51,7 @@ trait Dependencies {
 
   val commonDependencies = Seq(
     icu4j
+  , modeshapeCommon
   , scalaLogging
   , typesafeConfig
   )
