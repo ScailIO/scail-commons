@@ -23,7 +23,7 @@ object Dependencies extends Dependencies
 trait Dependencies {
   object v {
     val jvm = "1.8"
-    val scala = "2.12.9"
+    val scala = "2.12.11"
     val scapegoat = "1.3.10"
   }
 
