@@ -176,8 +176,12 @@ def docSourceUrl(version: String) = {
 
 val scaladocConfiguration = Seq(
   autoAPIMappings := true
-, apiMappings += (
-    scalaInstance.value.libraryJar -> url(s"http://www.scala-lang.org/api/${scalaVersion.value}/")
+, apiMappings ++= (
+    scalaInstance.value.libraryJars.filter { file =>
+      file.getName.startsWith("scala-library") && file.getName.endsWith(".jar")
+    }.map {
+      _ -> url(s"http://www.scala-lang.org/api/${scalaVersion.value}/")
+    }.toMap
   )
 , scalacOptions in (Compile, doc) := coreScalacOptions ++ Seq(
     "-author" // Include authors
@@ -274,6 +278,8 @@ def desugarImpl[T](c: blackbox.Context)(expr: c.Expr[T]) = {
 
 cleanKeepFiles += target.in(LocalRootProject).value / ".history"
 
+turbo in ThisBuild := true
+
 val sbtOptions = Seq(
   // Statements executed when starting the Scala REPL (sbt's `console` task)
   initialCommands += consoleDefinitions
@@ -290,14 +296,15 @@ val sbtOptions = Seq(
 , cleanKeepFiles := cleanKeepFiles.value filterNot { file =>
     file.getPath.endsWith(".history")
   }
-  // Do not exit sbt when Ctrl-C is used to stop a running app
-, cancelable in Global := true
 , fork in run := true
+, classLoaderLayeringStrategy in Compile := ClassLoaderLayeringStrategy.AllLibraryJars
+, classLoaderLayeringStrategy in Test := ClassLoaderLayeringStrategy.AllLibraryJars
 , trapExit := false
 , connectInput := true
 , outputStrategy := Option(StdoutOutput)
 , logLevel in Global := { if (insideCI.value) Level.Error else Level.Info }
 , logBuffered in Test := false
+, onChangedBuildSource in Global := WarnOnSourceChanges
 , showSuccess := true
 , showTiming := true
   // ScalaTest configuration
@@ -322,11 +329,12 @@ val sbtOptions = Seq(
     if (ansi) System.setProperty("scala.color", "true")
   }
   // Draw a separator between triggered runs (e.g, ~test)
-, triggeredMessage := { ws =>
-  if (ws.count > 1) {
+, watchTriggeredMessage := { (count, _, _) =>
+  val msg = if (count > 1) {
     val nl = System.lineSeparator * 2
     nl + "#" * 72 + nl
   } else ""
+  Option(msg)
 }
 , shellPrompt := { state =>
     import scala.Console.{BLUE, BOLD, RESET}
