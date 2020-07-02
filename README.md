@@ -14,13 +14,13 @@ Installation
 For Scala 2.12, add the following to `libraryDependencies`:
 
 ```scala
-"io.github.scailio" %% "commons" % "1.0.0"
+"io.github.scailio" %% "commons" % "1.1.0"
 ```
 
 To use the `Spec`, `Mocking`, and `MockConfig` traits, add:
 
 ```scala
-"io.github.scailio" %% "commons-test" % "1.0.0" % Test
+"io.github.scailio" %% "commons-test" % "1.1.0" % Test
 ```
 
 Also see the [transitive dependencies](#transitive-dependencies) requirements below.
@@ -28,7 +28,7 @@ Also see the [transitive dependencies](#transitive-dependencies) requirements be
 API documentation
 -----------------
 
-Scaladoc API documentation is available at http://scailio.github.io/scail-commons/scail/commons
+Scaladoc API documentation is available at http://scailio.github.io/scail-commons/latest/scail/commons/
 
 Typesafe Config wrapper
 -----------------------
@@ -365,7 +365,7 @@ Module                    | Dependency
 License
 -------
 
-Copyright 2017-2019 Marconi Lanna
+Copyright 2017-2020 Marconi Lanna
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

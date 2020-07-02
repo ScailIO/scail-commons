@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Marconi Lanna
+ * Copyright 2017-2020 Marconi Lanna
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -203,7 +203,9 @@ val scaladocPublishing = Seq(
   addMappingsToSiteDir(mappings.in(ScalaUnidoc, packageDoc), siteSubdirName.in(ScalaUnidoc))
 , ghpagesNoJekyll := true
 , git.remoteRepo := "git@github.com:ScailIO/scail-commons.git"
-, siteSubdirName in ScalaUnidoc := "/"
+, siteSubdirName in ScalaUnidoc := version.value
+, includeFilter in ghpagesCleanSite := new sbt.io.PrefixFilter(version.value)
+, excludeFilter in ghpagesCleanSite := NothingFilter
 )
 
 /*
