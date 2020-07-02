@@ -25,7 +25,7 @@ trait Dependencies {
     val jvm = "1.8"
     val scala = "2.12.11"
     val scalatest = "3.2.0"
-    val scapegoat = "1.3.10"
+    val scapegoat = "1.4.4"
   }
 
   // Resolvers
