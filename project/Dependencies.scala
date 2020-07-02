@@ -24,6 +24,7 @@ trait Dependencies {
   object v {
     val jvm = "1.8"
     val scala = "2.12.11"
+    val scalatest = "3.2.0"
     val scapegoat = "1.3.10"
   }
 
@@ -32,27 +33,28 @@ trait Dependencies {
   )
 
   // Java
-  val commonsCodec     = "commons-codec"               % "commons-codec"           % "1.13"        % Provided
-  val commonsLang      = "org.apache.commons"          % "commons-lang3"           % "3.9"         % Provided
-  val commonsText      = "org.apache.commons"          % "commons-text"            % "1.7"         % Provided
-  val commonsValidator = "commons-validator"           % "commons-validator"       % "1.6"         % Provided
-  val icu4j            = "com.ibm.icu"                 % "icu4j"                   % "64.2"        % Provided
-  val jBCrypt          = "de.svenkubiak"               % "jBCrypt"                 % "0.4.1"       % Provided
-  val modeshapeCommon  = "org.modeshape"               % "modeshape-common"        % "5.4.1.Final" % Provided
-  val typesafeConfig   = "com.typesafe"                % "config"                  % "1.3.4"       % Provided
+  val commonsCodec      = "commons-codec"               % "commons-codec"           % "1.13"        % Provided
+  val commonsLang       = "org.apache.commons"          % "commons-lang3"           % "3.9"         % Provided
+  val commonsText       = "org.apache.commons"          % "commons-text"            % "1.7"         % Provided
+  val commonsValidator  = "commons-validator"           % "commons-validator"       % "1.6"         % Provided
+  val icu4j             = "com.ibm.icu"                 % "icu4j"                   % "64.2"        % Provided
+  val jBCrypt           = "de.svenkubiak"               % "jBCrypt"                 % "0.4.1"       % Provided
+  val modeshapeCommon   = "org.modeshape"               % "modeshape-common"        % "5.4.1.Final" % Provided
+  val typesafeConfig    = "com.typesafe"                % "config"                  % "1.3.4"       % Provided
 
   // Scala
-  val scalaReflect     = "org.scala-lang"              % "scala-reflect"           % v.scala
-  val scalaLogging     = "com.typesafe.scala-logging" %% "scala-logging"           % "3.9.2"
+  val scalaReflect      = "org.scala-lang"              % "scala-reflect"           % v.scala
+  val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"           % "3.9.2"
 
   // Test
-  val mockitoScala     = "org.mockito"                %% "mockito-scala-scalatest" % "1.5.14"
-  val scalatest        = "org.scalatest"              %% "scalatest"               % "3.0.8"
-  val slf4jNop         = "org.slf4j"                   % "slf4j-nop"               % "1.7.28"
+  val mockitoScala      = "org.mockito"                %% "mockito-scala-scalatest" % "1.5.14"
+  val scalatest         = "org.scalatest"              %% "scalatest-freespec"      % v.scalatest
+  val scalatestDiagrams = "org.scalatest"              %% "scalatest-diagrams"      % v.scalatest
+  val slf4jNop          = "org.slf4j"                   % "slf4j-nop"               % "1.7.28"
 
   // Compiler plug-ins
-  val linter           = "org.psywerx.hairyfotr"      %% "linter"                  % "0.1.17"
-  val macrosParadise   = "org.scalamacros"             % "paradise"                % "2.1.1"  cross CrossVersion.full
+  val linter            = "org.psywerx.hairyfotr"      %% "linter"                  % "0.1.17"
+  val macrosParadise    = "org.scalamacros"             % "paradise"                % "2.1.1"  cross CrossVersion.full
 
   val commonDependencies = Seq(
     commonsCodec
@@ -69,12 +71,14 @@ trait Dependencies {
   val testDependencies = Seq(
     mockitoScala
   , scalatest
+  , scalatestDiagrams
   , slf4jNop
   ) map (_ % Test)
 
   val commonsTestDependencies = Seq(
     mockitoScala
   , scalatest
+  , scalatestDiagrams
   , typesafeConfig
   )
 }

@@ -17,10 +17,10 @@ package scail.commons.ops
 
 import scail.commons.SpecLike
 
-import org.scalatest.FreeSpec
+import org.scalatest.freespec.AnyFreeSpec
 
 class IntOpsSpec
-  extends FreeSpec
+  extends AnyFreeSpec
   with SpecLike {
   "IntOps should:" - {
     "Tell whether numbers are even" in {
