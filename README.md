@@ -351,15 +351,15 @@ Some modules require the following dependencies:
 Module                    | Dependency
 ------------------------- | ------------------------------------------------------
 `BCryptOps`               | `"de.svenkubiak" % "jBCrypt" % "0.4.1"`
-`Config`                  | `"com.typesafe" % "config" % "1.3.4"`
-`DigestOps`               | `"commons-codec" % "commons-codec" % "1.13"`
-`EscapeOps`               | `"org.apache.commons" % "commons-text" % "1.7"`
+`Config`                  | `"com.typesafe" % "config" % "1.4.0"`
+`DigestOps`               | `"commons-codec" % "commons-codec" % "1.14"`
+`EscapeOps`               | `"org.apache.commons" % "commons-text" % "1.8"`
 `InflectorOps`            | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
 `IntOps#ordinalize`       | `"org.modeshape" % "modeshape-common" % "5.4.1.Final"`
-`Messages`                | `"com.ibm.icu" % "icu4j" % "64.2"`
-`StringOps`               | `"org.apache.commons" % "commons-lang3" % "3.9"`
-`StringOps#titleCase`     | `"org.apache.commons" % "commons-text" % "1.7"`
-`ThrowableOps#stackTrace` | `"org.apache.commons" % "commons-lang3" % "3.9"`
+`Messages`                | `"com.ibm.icu" % "icu4j" % "67.1"`
+`StringOps`               | `"org.apache.commons" % "commons-lang3" % "3.10"`
+`StringOps#titleCase`     | `"org.apache.commons" % "commons-text" % "1.8"`
+`ThrowableOps#stackTrace` | `"org.apache.commons" % "commons-lang3" % "3.10"`
 `ValidatorOps`            | `"commons-validator" % "commons-validator" % "1.6"`
 
 License

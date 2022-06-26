@@ -53,7 +53,7 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-ghpages" % "0.6.3")
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.1")
 
 // http://github.com/xerial/sbt-sonatype
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.3")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.5")
 
 // Adds a `dependencyUpdates` task to check Maven repositories for dependency updates
 // http://github.com/rtimush/sbt-updates

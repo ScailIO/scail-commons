@@ -1,0 +1,167 @@
+checklist:
+. /** Extension methods for ``. */
+. implicit class XOps(private val value: X) extends AnyVal
+. type parameters: A, B, M, T
+
+. XOpsSpec
+. package scail.common
+. "XOps should:"
+. comments on class Context
+
+. espaco entre o scaladoc e o primeiro @
+. singular, not plural: "returns"
+. "return the"
+. ponto final no description, sem ponto nos @
+
+. scalastyle scaladoc
+
+--
+
+. those we don't speak of (any, anyref)
+* java.util.Base64
+* jsoup: "org.jsoup" % "jsoup" % "1.11.3"
+. java.util.zip
+. java.util.regex.{Matcher, Pattern}
+. java.util.concurrent.Future to scala.future
+
+. https://github.com/cvogt/scala-extensions
+. https://github.com/scala-hamsters/hamsters
+. https://github.com/twitter/util
+
+---
+
+? scaladoc:
+  . commons/src/util/Config.scala
+  . commons-test/src/util/MockConfig.scala
+
+? documentar: constants, spec, defaultsTo
+
+------
+
+tests:
+. https://github.com/tkawachi/sbt-doctest
+. https://github.com/ThoughtWorksInc/example.scala
+
+http://javalite.github.io/activejdbc/snapshot/org/javalite/common/HumanDate.html
+
+---
+
+def deleteRecursively(): File = self.tap(_.tree.reverse.foreach(_.delete()))
+
+def withTempDir[A](f: File ⇒ A): A = withTempDirectory(suffix)(f)
+
+def withTempDir[A](suffix: String, prefix: String = prefix)(f: File ⇒ A): A =
+  withTempFile[A](suffix, prefix)(tmp ⇒ f(tmp.changeToDirectory()))
+
+def withTempFile[A](f: File ⇒ A): A = withTempFile(suffix)(f)
+
+def withTempFile[A](suffix: String, prefix: String = prefix)(f: File ⇒ A): A =
+  File.createTempFile(prefix, suffix).calc(file ⇒ try f(file) finally file.deleteRecursively())
+
+grizzled.file.Implicits.GrizzledFile
+
+---
+
+bit utils: bit count, first bit 1, last bit 1, etc. (for int & long, Hamming Weight algorithm, hacker delight)
+ . if ((bound & -bound) == bound)  // i.e., bound is a power of 2
+
+---
+
+    fK   f    mV   m
+c: cMap cMap cMap cMap
+i: iMap iMap iMap iMap
+m: cMap mMap cMap mMap
+x: cMap mMap cMap xMap
+
+---
+
+Config:
+
+novos tipos:
+. currency, IP, email, url
+. java.net.{URI, URL, InetAddress}
+
+https://gist.github.com/tpolecat/5307872
+https://github.com/scala/bug/issues/7332
+https://github.com/scala/bug/issues/2509
+https://github.com/scala/bug/issues/10099
+
+https://groups.google.com/forum/#!topic/scala-language/dQEomVCH3CI
+
+---
+
+https://github.com/cvogt/scala-extensions
+https://github.com/t3hnar/scalax
+
+https://github.com/jozic/scalax-collection
+
+https://github.com/ritschwumm/scutil/tree/master/sub/base/src/main/scala/scutil
+https://github.com/ritschwumm/scutil/tree/master/sub/core/src/main/scala/scutil
+
+--
+
+https://github.com/alioygur/godash
+
+IsASCII(s string)
+IsAlpha(s string)
+IsAlphanumeric(s string)
+IsBase64(s string)
+IsByteLength(str string, min, max int)
+IsCreditCard(str string)
+IsDNSName(str string)
+IsDataURI(str string)
+IsDialString(str string)
+IsDivisibleBy(str, num string)
+IsEmail(s string)
+IsFilePath(str string)
+IsFloat(str string)
+IsFullWidth(str string)
+IsHalfWidth(str string)
+IsHexadecimal(str string)
+IsHexcolor(str string)
+IsIP(str string)
+IsIPv4(str string)
+IsIPv6(str string)
+IsISBN(str string, version int)
+IsISBN10(str string)
+IsISBN13(str string)
+IsISO3166Alpha2(str string)
+IsISO3166Alpha3(str string)
+IsInRange(value, left, right float64)
+IsInt(str string)
+IsJSON(str string)
+IsLatitude(str string)
+IsLongitude(str string)
+IsLowerCase(str string)
+IsMAC(str string)
+IsMatches(str, pattern string)
+IsMongoID(str string)
+IsMultibyte(s string)
+IsNatural(value float64)
+IsNegative(value float64)
+IsNonNegative(value float64)
+IsNonPositive(value float64)
+IsNull(str string)
+IsNumeric(s string)
+IsPort(str string)
+IsPositive(value float64)
+IsPrintableASCII(s string)
+IsRGBcolor(str string)
+IsRequestURI(rawurl string)
+IsRequestURL(rawurl string)
+IsSSN(str string)
+IsSemver(str string)
+IsStringLength(str string, params ...string)
+IsStringMatches(s string, params ...string)
+IsURL(str string)
+IsUTFDigit(s string)
+IsUTFLetter(str string)
+IsUTFLetterNumeric(s string)
+IsUTFNumeric(s string)
+IsUUID(str string)
+IsUUIDv3(str string)
+IsUUIDv4(str string)
+IsUUIDv5(str string)
+IsUpperCase(str string)
+IsVariableWidth(str string)
+IsWhole(value float64)

@@ -309,6 +309,7 @@ val sbtOptions = Seq(
 , onChangedBuildSource in Global := WarnOnSourceChanges
 , showSuccess := true
 , showTiming := true
+, useGpg in Global := false
   // ScalaTest configuration
 , testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest
     // F: show full stack traces
@@ -358,7 +359,7 @@ addCommandAlias("testCoverage", ";clean ;coverageOn ;test ;coverageAggregate ;co
  * Publishing settings
  */
 
-import xerial.sbt.Sonatype.GitHubHosting
+//import xerial.sbt.Sonatype.GitHubHosting
 val publishing = Seq(
   scmInfo := Option(ScmInfo(
     url("http://github.com/ScailIO/scail-commons"),
